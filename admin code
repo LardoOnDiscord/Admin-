@@ -1,0 +1,52 @@
+-- Module Script:
+local admin = {}
+
+function admin.CMDS(plrToGiveName)
+
+local plrs = game:GetService(“Players”)
+
+local plrToGive = plrs[plrToGiveName]
+
+if plrToGive:FindFirstChild(“HasAdmin”) then
+plrToGive.Chatted:Connect(function(msg)
+if msg:match(“:kill”) then
+if msg:split(“ “)[1] then
+local plrName = msg:split(“ “)[1]
+plrs[plrName].Character:FindFirstChild(“Humanoid”).Health = 0
+end
+end
+end)
+elseif not plrToGive:FindFirstChild(“HasAdmin”) then
+return plrToGive
+end
+end
+
+function admin.Give(plrToGiveName)
+    local hasAdmin = Instance.new("BoolValue", plrs[plrToGiveName])
+    hasAdmin.Name = "HasAdmin"
+end
+
+return admin
+
+-- Server Script:
+-- local admin = require(script.AdminCMDS)
+
+-- local plrs = game:GetService("Players")
+if plrs:FindFirstChild("CEO_XYZRGB") then
+    local ceo = plrs:FindFirstChild("CEO_XYZRGB")
+    ceo.Chatted:Connect(function(msg)
+        if msg:match("!giveNETCMDS_to") then
+            if msg:split(" _G")[1] then
+                if msg:split(" to")[2] then
+                   if msg:split(" player")[3] then
+                     if msg:split(" ")[4] then
+                         local plrName = msg:split(" ")[4]
+                         
+                         admin.Give(plrName)
+                     end
+                   end
+                end
+            end
+        end
+    end)
+end
